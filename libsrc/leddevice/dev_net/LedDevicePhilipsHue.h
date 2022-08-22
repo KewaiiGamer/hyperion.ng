@@ -166,12 +166,15 @@ public:
 	/// @param color the color to set
 	///
 	void setColor(const CiColor& color);
+	void setSegmentColor(const CiColor& color, int segment);
 
 	int getId() const;
 
 	bool getOnOffState() const;
 	int getTransitionTime() const;
+	int getSegments() const;
 	CiColor getColor() const;
+	CiColor getSegmentColor(int segment) const;
 	bool hasColor() const;
 
 	///
@@ -194,7 +197,10 @@ private:
 	int _ledidx;
 	bool _on;
 	int _transitionTime;
+	int _segments;
 	CiColor _color;
+	using CiColorSegments = std::vector<CiColor>;
+	CiColorSegments _colorSegments;
 	bool    _hasColor;
 	/// darkes blue color in hue lamp GAMUT = black
 	CiColor _colorBlack;
@@ -446,6 +452,8 @@ public:
 	void setTransitionTime(PhilipsHueLight& light);
 	void setColor(PhilipsHueLight& light, CiColor& color);
 	void setState(PhilipsHueLight& light, bool on, const CiColor& color);
+	void setSegmentColor(PhilipsHueLight& light, CiColor& color, int segment);
+
 
 public slots:
 
