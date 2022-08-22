@@ -1559,26 +1559,25 @@ int LedDevicePhilipsHue::writeSingleLights(const std::vector<ColorRgb>& ledValue
 				// Get color.
 				ColorRgb color = ledValues.at(idx + segment);
 				// Scale colors from [0, 255] to [0, 1] and convert to xy space.
-				CiColor xy = CiColor::rgbToCiColor(color.red / 255.0, color.green / 255.0, color.blue / 255.0, light.getColorSpace());
-
+				CiColor xy = CiColor::rgbToCiColor(color.red / 255.0, color.green / 255.0, color.blue / 255.0, light.getColorSpace(), _candyGamma);
 				setSegmentColor(light, xy, segment);
-				if (xy.bri >= 0.0 && xy.bri <= _brightnessThreshold)
+				if (xy.bri >= 0.0 && xy.bri <= _blackLevel)
 				{
 					blackCounter++;
 				}
-			}
+			}rgb
 		}
 		else
 		{
 			// Get color.
 			ColorRgb color = ledValues.at(idx);
 			// Scale colors from [0, 255] to [0, 1] and convert to xy space.
-			CiColor xy = CiColor::rgbToCiColor(color.red / 255.0, color.green / 255.0, color.blue / 255.0, light.getColorSpace());
+			CiColor xy = CiColor::rgbToCiColor(color.red / 255.0, color.green / 255.0, color.blue / 255.0, light.getColorSpace(), _candyGamma);
 
 			if (_useHueEntertainmentAPI)
 			{
 				this->setColor(light, xy);
-				if (xy.bri >= 0.0 && xy.bri <= _brightnessThreshold)
+				if (xy.bri >= 0.0 && xy.bri <= _blackLevel)
 				{
 					blackCounter++;
 				}
@@ -1597,11 +1596,6 @@ int LedDevicePhilipsHue::writeSingleLights(const std::vector<ColorRgb>& ledValue
 			}
 		}
 		idx++;
-	}
-	
-	if( _useHueEntertainmentAPI )
-	{
-		_allLightsBlack = ( blackCounter == lightsCount );
 	}
 
 	return 0;
