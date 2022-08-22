@@ -1654,7 +1654,7 @@ void LedDevicePhilipsHue::setSegmentColor(PhilipsHueLight& light, CiColor& color
 {
 	if ( light.getSegmentColor(segment) != color)
 	{
-		color.bri = ( qMin( _brightnessMax, _brightnessFactor * qMax( _brightnessMin, color.bri ) ) );
+     	color.bri = (qMin((double)1.0, _brightnessFactor * qMax((double)0, color.bri)));
 		light.setSegmentColor(color, segment);
 	}
 }
