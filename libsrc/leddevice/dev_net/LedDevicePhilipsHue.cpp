@@ -1565,7 +1565,7 @@ int LedDevicePhilipsHue::writeSingleLights(const std::vector<ColorRgb>& ledValue
 				{
 					blackCounter++;
 				}
-			}rgb
+			}
 		}
 		else
 		{
